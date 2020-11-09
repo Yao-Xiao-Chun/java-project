@@ -44,7 +44,8 @@ public class MybatisConfigurer {
 
         //添加XML目录
         ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-        factory.setMapperLocations(resolver.getResources("classpath:mapper/*.xml"));
+        //用classpath*:需要遍历所有的classpath，所以加载速度是很慢的
+        factory.setMapperLocations(resolver.getResources("classpath*:mapper/*.xml"));
         return factory.getObject();
     }
 
