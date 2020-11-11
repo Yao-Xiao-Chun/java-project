@@ -2,12 +2,13 @@ package com.company.project.mapper;
 
 import com.company.project.pojo.User;
 
+import com.github.pagehelper.Page;
+
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
+
 
 @Repository
 public interface UserMapper {
@@ -23,5 +24,14 @@ public interface UserMapper {
 
     @Select("select count(*) from users")
     int total();
+
+    @Select("select id,username,password,nick_name as nickName,sex from users limit 1")
+    User getByOne();
+
+    @Select("select * from users")
+    @Results({
+            @Result(property = "nickName",column = "nick_name")
+    })
+    Page<User> getPageAll();
 
 }

@@ -2,7 +2,9 @@ package com.company.project.controller;
 
 import com.company.project.core.Result;
 import com.company.project.core.ResultCode;
+import com.company.project.pojo.User;
 import com.company.project.service.UserService;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -55,32 +57,36 @@ public class IndexController {
     }
 
     @RequestMapping("/user_list")
-    public String list()
+    public Result list()
     {
         System.out.println("开始执行查询>>>");
+        Result result = new Result();
 
-        List<Map<String, Object>> list = jdbcTemplate.queryForList("select * from users where id =1");
+        List<User> list = userService.getAll(1,10);
 
-        System.out.println(list.get(0));
-
+        System.out.println(list);
         System.out.println("查询1条数据>>>");
 
-        return "hello";
+        return result.setData(list).setMessage("访问成功");
     }
 
     @RequestMapping("/info")
-    public void info()
+    public Result info()
     {
         System.out.println("开始执行查询>>>");
+        Result result = new Result();
+        Map<String,Object> map = new HashMap<>();
 
         try{
-            userService.getUserById(1);
-            System.out.println("正常结果");
-        }catch (Exception exception){
+            String name = userService.getUserById(1);
+            map.put("name",name);
+            map.put("msg","访问成功");
 
+        }catch (Exception exception){
+            map.put("msg",exception.getMessage());
             System.out.println(exception.getMessage());
         }
-        return;
+        return result.setData(map).setMessage(map.get("msg").toString());
 
     }
 
@@ -102,5 +108,15 @@ public class IndexController {
         }
         return result.setData(map);
 
+    }
+
+    @RequestMapping("/limit")
+    public Result userInfo()
+    {
+        Result result = new Result();
+
+        PageInfo<User> user = userService.getPageAll(1,2);
+
+        return result.setData(user).setMessage("访问成功");
     }
 }

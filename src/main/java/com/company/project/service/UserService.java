@@ -1,8 +1,11 @@
 package com.company.project.service;
 
 import com.company.project.pojo.User;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 
 
@@ -14,7 +17,7 @@ public interface UserService {
      * @param pageSize
      * @return
      */
-    Map<String,Object> getAll(int pageNum, int pageSize);
+    List<User> getAll(int pageNum, int pageSize);
 
 
     /**
@@ -29,4 +32,8 @@ public interface UserService {
      * @return
      */
    int total();
+
+   User getByOne();
+
+   PageInfo<User> getPageAll(int pageNum, int pageSize);
 }
