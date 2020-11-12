@@ -1,7 +1,9 @@
-package com.company.project.pojo;
+package com.company.project.entity;
 
+import javax.persistence.Entity;
 import java.io.Serializable;
 
+@Entity
 public class User implements Serializable {
 
 
@@ -29,6 +31,8 @@ public class User implements Serializable {
      *
      */
     private Integer sex;
+
+
 
     /**
      *

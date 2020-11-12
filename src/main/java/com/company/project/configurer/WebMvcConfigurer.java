@@ -1,6 +1,7 @@
 package com.company.project.configurer;
 
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,19 +11,27 @@ import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.ws.Response;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 
-import com.company.project.core.Result;
-import com.company.project.core.ResultCode;
-import com.company.project.core.ServiceException;
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTDecodeException;
+import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.company.project.core.*;
+import com.company.project.entity.LoginUser;
+import com.company.project.entity.User;
+import com.company.project.service.UserService;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
@@ -41,7 +50,8 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
  */
 @Configuration
 public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
-
+    @Autowired
+    UserService userService;
     private final Logger logger = LoggerFactory.getLogger(WebMvcConfigurer.class);
     @Value("${spring.profiles.active}")
     private String env;//当前激活的配置文件
@@ -108,12 +118,27 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         //接口签名认证拦截器，该签名认证比较简单，实际项目中可以使用Json Web Token或其他更好的方式替代。
-        if (!"dev".equals(env)) { //开发环境忽略签名认证
+        if (!"prod".equals(env)) { //开发环境忽略签名认证
             registry.addInterceptor(new HandlerInterceptorAdapter() {
                 @Override
-                public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+                public boolean preHandle(HttpServletRequest request,
+                                         HttpServletResponse response,
+                                         Object handler) throws Exception {
+                    boolean pass;
+
+                    try{
+                        pass = validateJwtSign(request,response,handler);
+                    }catch (Exception e){
+
+                        logger.warn(e.getMessage());
+                        Result result = new Result();
+                        result.setCode(ResultCode.SUCCESS).setMessage("未登录,请重新登录");
+                        responseResult(response,result);
+                        return false;
+                    }
+
                     //验证签名
-                    boolean pass = validateSign(request);
+                    //boolean pass = validateSign(request);
                     if (pass) {
                         return true;
                     } else {
@@ -126,7 +151,7 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
                         return false;
                     }
                 }
-            });
+            }).addPathPatterns("/**");//拦截所有请求,通过判断@LoginRequired注解,判断是否需要登录
         }
     }
 
@@ -192,5 +217,72 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
         }
 
         return ip;
+    }
+
+    /**
+     * jwt拦截器
+     * @return
+     */
+    private boolean validateJwtSign(HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse, Object object)
+    {
+        String token = httpServletRequest.getHeader("token");//从head头部获取token
+
+        // 如果不是映射到方法直接通过
+        if(!(object instanceof HandlerMethod)){
+            return true;
+        }
+
+        HandlerMethod handlerMethod = (HandlerMethod)object;
+
+        Method method = handlerMethod.getMethod();
+
+        //检查是否有passtoken注释,存在跳过验证
+        if(method.isAnnotationPresent(PassToken.class)){
+            PassToken passtoken = method.getAnnotation(PassToken.class);
+            if(passtoken.required()){
+
+                return true;
+            }
+        }
+
+        //检查有没有需要用户权限的注解
+        if (method.isAnnotationPresent(UserLoginToken.class)) {
+            UserLoginToken userLoginToken = method.getAnnotation(UserLoginToken.class);
+            if (userLoginToken.required()) {
+                // 执行认证
+                if (token == null) {
+                    throw new RuntimeException("无token，请重新登录");
+                }
+                // 获取 token 中的 user id
+                String userId;
+                try {
+                    userId = JWT.decode(token).getAudience().get(0);
+                    logger.info(userId+"登录用户的id是多少");
+                } catch (JWTDecodeException j) {
+                    throw new RuntimeException("401");
+                }
+                Integer loginUserId = 0;
+                try{
+                    loginUserId = Integer.parseInt(userId);
+                }catch(NumberFormatException numberFormatException){
+                    throw new RuntimeException("获取登录用户id错误");
+                }
+
+                User user = userService.getByOne(loginUserId);
+                if (user == null) {
+                    throw new RuntimeException("用户不存在，请重新登录");
+                }
+                // 验证 token
+                JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(user.getPassword())).build();
+                try {
+                    jwtVerifier.verify(token);
+                } catch (JWTVerificationException e) {
+                    throw new RuntimeException("401");
+                }
+                return true;
+            }
+        }
+
+        return true;
     }
 }

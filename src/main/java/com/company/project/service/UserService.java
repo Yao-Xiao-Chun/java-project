@@ -1,12 +1,9 @@
 package com.company.project.service;
 
-import com.company.project.pojo.User;
-import com.github.pagehelper.Page;
+import com.company.project.entity.User;
 import com.github.pagehelper.PageInfo;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
 
 
 public interface UserService {
@@ -33,7 +30,7 @@ public interface UserService {
      */
    int total();
 
-   User getByOne();
+   User getByOne(int id);
 
    PageInfo<User> getPageAll(int pageNum, int pageSize);
 }

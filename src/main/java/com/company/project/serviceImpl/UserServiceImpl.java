@@ -1,9 +1,8 @@
 package com.company.project.serviceImpl;
 
 import com.company.project.mapper.UserMapper;
-import com.company.project.pojo.User;
+import com.company.project.entity.User;
 import com.company.project.service.UserService;
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -39,9 +37,11 @@ public class UserServiceImpl implements UserService {
        return userMapper.total();
     }
     @Override
-    public User getByOne()
+    public User getByOne(int id)
     {
-        return userMapper.getByOne();
+        System.out.println("查询的结构");
+        System.out.println(userMapper.getByOne(id));
+        return userMapper.getByOne(id);
     }
 
 

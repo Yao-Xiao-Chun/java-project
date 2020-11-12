@@ -115,7 +115,22 @@
             <artifactId>java-jwt</artifactId>
             <version>3.4.0</version>
         </dependency>
+
+        <!--lombok加载 -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.16.10</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.46</version>
+        </dependency>
     </dependencies>
+
 
     <build>
         <plugins>

@@ -2,14 +2,15 @@ package com.company.project.controller;
 
 import com.company.project.core.Result;
 import com.company.project.core.ResultCode;
-import com.company.project.pojo.User;
+import com.company.project.core.UserLoginToken;
+import com.company.project.entity.FormUser;
+import com.company.project.entity.User;
 import com.company.project.service.UserService;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -110,13 +111,17 @@ public class IndexController {
 
     }
 
-    @RequestMapping("/limit")
-    public Result userInfo()
+    @RequestMapping(value = "/limit",method = RequestMethod.POST)
+    public Result userInfo(@RequestBody FormUser formUser,
+                           @RequestParam(name = "page",defaultValue = "1") int page,
+                           @RequestParam(name = "size",defaultValue = "10") int size
+                           )
     {
         Result result = new Result();
 
-        PageInfo<User> user = userService.getPageAll(1,2);
+        //获取分页参数
+        PageInfo<User> user = userService.getPageAll(formUser.getPage(),formUser.getSize());
 
-        return result.setData(user).setMessage("访问成功");
+        return result.setData(user).setMessage("访问成功").setCode(ResultCode.SUCCESS);
     }
 }
