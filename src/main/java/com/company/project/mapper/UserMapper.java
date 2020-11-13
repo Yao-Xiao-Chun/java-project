@@ -13,10 +13,10 @@ import java.util.List;
 @Repository
 public interface UserMapper {
 
-    @Select("select username from users where id = 1")
+    @Select("select password from users where id = 1")
     String selectUser(Integer id);
 
-    @Select("select id,username,password,nick_name as nickName,sex from users")
+    @Select("select id,username,password,nick_name,sex from users")
     List<User> getAll();
 
     @Insert("insert into users(name) values(#{name})")
@@ -25,16 +25,18 @@ public interface UserMapper {
     @Select("select count(*) from users")
     int total();
 
-    @Select("select * from users limit 1")
+    @Select("select * from users where id = #{id}")
     @Results({
-            @Result(property = "nickName",column = "nick_name")
+
     })
     User getByOne(Integer id);
 
     @Select("select * from users")
     @Results({
-            @Result(property = "nickName",column = "nick_name")
+
     })
     Page<User> getPageAll();
 
+    @Select("select id,username,password,nick_name,sex from users")
+    List<User> getByIDs();
 }

@@ -37,10 +37,10 @@ public class UserServiceImpl implements UserService {
        return userMapper.total();
     }
     @Override
-    public User getByOne(int id)
+    public User getByOne(Integer id)
     {
-        System.out.println("查询的结构");
         System.out.println(userMapper.getByOne(id));
+        System.out.println("返回结果");
         return userMapper.getByOne(id);
     }
 
@@ -51,5 +51,11 @@ public class UserServiceImpl implements UserService {
         PageHelper.startPage(pageNum,pageSize);
         PageInfo<User> pageInfo  = new PageInfo<>(userMapper.getPageAll());
         return pageInfo;
+    }
+
+    @Override
+    public List<User> getByIDs(Integer id)
+    {
+        return userMapper.getByIDs();
     }
 }

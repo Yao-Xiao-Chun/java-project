@@ -31,10 +31,10 @@ public class LoginController {
 
         Map<String,Object> map = new HashMap<>();
         try{
-
+            System.out.println(userService.getByIDs(1));
             User user = userService.getByOne(1);
-            LoginUser loginUser = null;
 
+            LoginUser loginUser = null;
 
             loginUser.setId(user.getId());
 
@@ -46,7 +46,8 @@ public class LoginController {
             map.put("token",token);
 
         }catch (Exception exception){
-            map.put("msg",exception.getMessage());
+            map.put("errorMsg",exception.getMessage());
+
         }
 
 

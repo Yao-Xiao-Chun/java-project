@@ -30,7 +30,9 @@ public interface UserService {
      */
    int total();
 
-   User getByOne(int id);
+   User getByOne(Integer id);
 
    PageInfo<User> getPageAll(int pageNum, int pageSize);
+
+    List<User> getByIDs(Integer id);
 }

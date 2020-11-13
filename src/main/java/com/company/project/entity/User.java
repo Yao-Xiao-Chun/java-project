@@ -1,8 +1,10 @@
 package com.company.project.entity;
 
+import lombok.Data;
+
 import javax.persistence.Entity;
 import java.io.Serializable;
-
+@Data
 @Entity
 public class User implements Serializable {
 
@@ -10,7 +12,7 @@ public class User implements Serializable {
     /**
      *
      */
-    private Integer id;
+    private int id;
 
     /**
      *
@@ -25,46 +27,19 @@ public class User implements Serializable {
     /**
      *
      */
-    private String nickName;
+    private String nick_name;
 
     /**
      *
      */
-    private Integer sex;
+    private int sex;
 
-
-
-    /**
-     *
-     */
-    //private SimpleDateFormat registerDate;
-
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getNickName() {
-        return nickName;
-    }
-
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
-    }
-
-    public Integer getSex() {
-        return sex;
-    }
-
-    public void setSex(Integer sex) {
-        this.sex = sex;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getUsername() {
@@ -75,11 +50,34 @@ public class User implements Serializable {
         this.username = username;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+
+
+    public int getSex() {
+        return sex;
+    }
+
+    public void setSex(int sex) {
+        this.sex = sex;
     }
     @Override
-    public String toString(){
+    public String toString()
+    {
         return "";
+    }
+
+    public String getNick_name() {
+        return nick_name;
+    }
+
+    public void setNick_name(String nick_name) {
+        this.nick_name = nick_name;
     }
 }
