@@ -6,13 +6,13 @@ import javax.persistence.Entity;
 import java.io.Serializable;
 @Data
 @Entity
-public class User implements Serializable {
+public class User {
 
 
     /**
      *
      */
-    private int id;
+    private Long id;
 
     /**
      *
@@ -27,18 +27,18 @@ public class User implements Serializable {
     /**
      *
      */
-    private String nick_name;
+    private String nickName;
 
     /**
      *
      */
     private int sex;
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -73,11 +73,11 @@ public class User implements Serializable {
         return "";
     }
 
-    public String getNick_name() {
-        return nick_name;
+    public String getNickName() {
+        return nickName;
     }
 
-    public void setNick_name(String nick_name) {
-        this.nick_name = nick_name;
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
     }
 }

@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
@@ -26,7 +27,14 @@ import static com.company.project.core.ProjectConstant.*;
 public class MybatisConfigurer {
 
     @Bean
-    public SqlSessionFactory sqlSessionFactoryBean(DataSource dataSource) throws Exception {
+    @ConfigurationProperties(prefix = "mybatis.configuration")
+    public org.apache.ibatis.session.Configuration globalConfiguration(){
+
+        return  new org.apache.ibatis.session.Configuration();
+    }
+
+    @Bean
+    public SqlSessionFactory sqlSessionFactoryBean(DataSource dataSource,org.apache.ibatis.session.Configuration config) throws Exception {
         SqlSessionFactoryBean factory = new SqlSessionFactoryBean();
         factory.setDataSource(dataSource);
         factory.setTypeAliasesPackage(MODEL_PACKAGE);
@@ -41,7 +49,10 @@ public class MybatisConfigurer {
 
         //添加插件
         factory.setPlugins(new Interceptor[]{pageHelper});
-
+        
+        //读取application.properties文件
+        factory.setConfiguration(config);
+        
         //添加XML目录
         ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
         //用classpath*:需要遍历所有的classpath，所以加载速度是很慢的

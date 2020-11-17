@@ -34,5 +34,5 @@ public interface UserService {
 
    PageInfo<User> getPageAll(int pageNum, int pageSize);
 
-    List<User> getByIDs(Integer id);
+   List<User> getByIDs(Integer id);
 }

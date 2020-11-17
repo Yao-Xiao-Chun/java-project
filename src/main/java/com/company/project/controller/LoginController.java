@@ -28,30 +28,17 @@ public class LoginController {
     {
         //生成token
         Result result = new Result();
-
+        User user = userService.getByOne(1);
         Map<String,Object> map = new HashMap<>();
-        try{
-            System.out.println(userService.getByIDs(1));
-            User user = userService.getByOne(1);
 
-            LoginUser loginUser = null;
+        LoginUser loginUser = new LoginUser();
+        loginUser.setId(user.getId().intValue());
+        loginUser.setPassword(user.getPassword());
 
-            loginUser.setId(user.getId());
+        JwtToken jwtToken = new JwtToken();
 
-            loginUser.setPassword(user.getPassword());
-
-            JwtToken jwtToken = new JwtToken();
-
-            String token = jwtToken.getToken(loginUser);
-            map.put("token",token);
-
-        }catch (Exception exception){
-            map.put("errorMsg",exception.getMessage());
-
-        }
-
-
-
+        String token = jwtToken.getToken(loginUser);
+        map.put("token",token);
 
 
         return result.setData(map).setMessage("生成token成功");

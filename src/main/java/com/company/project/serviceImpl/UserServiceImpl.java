@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -39,9 +40,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getByOne(Integer id)
     {
-        System.out.println(userMapper.getByOne(id));
+        User user = userMapper.getByOne(id);
+        System.out.print(user);
+        System.out.println(user.getNickName());
         System.out.println("返回结果");
-        return userMapper.getByOne(id);
+        return user;
     }
 
 
@@ -56,6 +59,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> getByIDs(Integer id)
     {
-        return userMapper.getByIDs();
+
+        return userMapper.getByIDs(id);
     }
 }

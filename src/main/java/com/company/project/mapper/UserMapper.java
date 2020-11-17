@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-
+@Mapper
 @Repository
 public interface UserMapper {
 
@@ -37,6 +37,7 @@ public interface UserMapper {
     })
     Page<User> getPageAll();
 
-    @Select("select id,username,password,nick_name,sex from users")
-    List<User> getByIDs();
+    //@Select("select * from users")
+    @Select("select id,username,password,nick_name,sex from users where id=#{id}")
+    List<User> getByIDs(Integer id);
 }
