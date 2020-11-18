@@ -70,7 +70,7 @@ public class User {
     @Override
     public String toString()
     {
-        return "";
+        return getNickName()+":"+getUsername();
     }
 
     public String getNickName() {

@@ -57,6 +57,7 @@ public class IndexController {
         return result;
     }
 
+    @UserLoginToken
     @RequestMapping("/user_list")
     public Result list()
     {

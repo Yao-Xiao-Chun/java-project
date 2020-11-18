@@ -39,7 +39,7 @@ public class LoginController {
 
         String token = jwtToken.getToken(loginUser);
         map.put("token",token);
-
+        map.put("info",user);
 
         return result.setData(map).setMessage("生成token成功");
 

@@ -226,7 +226,7 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
     private boolean validateJwtSign(HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse, Object object)
     {
         String token = httpServletRequest.getHeader("token");//从head头部获取token
-
+         logger.info("获取的token:"+token);
         // 如果不是映射到方法直接通过
         if(!(object instanceof HandlerMethod)){
             return true;
@@ -254,7 +254,7 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
                     throw new RuntimeException("无token，请重新登录");
                 }
                 // 获取 token 中的 user id
-                String userId;
+                String userId = "";
                 try {
                     userId = JWT.decode(token).getAudience().get(0);
                     logger.info(userId+"登录用户的id是多少");
