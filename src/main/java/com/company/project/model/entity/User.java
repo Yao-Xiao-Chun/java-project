@@ -1,9 +1,9 @@
-package com.company.project.entity;
+package com.company.project.model.entity;
 
 import lombok.Data;
 
 import javax.persistence.Entity;
-import java.io.Serializable;
+
 @Data
 @Entity
 public class User {

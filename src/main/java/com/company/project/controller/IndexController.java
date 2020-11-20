@@ -3,9 +3,9 @@ package com.company.project.controller;
 import com.company.project.core.Result;
 import com.company.project.core.ResultCode;
 import com.company.project.core.UserLoginToken;
-import com.company.project.entity.FormUser;
-import com.company.project.entity.User;
-import com.company.project.service.UserService;
+import com.company.project.model.entity.FormUser;
+import com.company.project.model.entity.User;
+import com.company.project.service.intf.UserService;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -125,4 +125,14 @@ public class IndexController {
 
         return result.setData(user).setMessage("访问成功").setCode(ResultCode.SUCCESS);
     }
+
+    @RequestMapping(value = "/add_user",method = RequestMethod.POST)
+    public Result addUser()
+    {
+        Result result = new Result();
+
+
+        return result;
+    }
+
 }

@@ -1,6 +1,6 @@
-package com.company.project.service;
+package com.company.project.service.intf;
 
-import com.company.project.entity.User;
+import com.company.project.model.entity.User;
 import com.github.pagehelper.PageInfo;
 
 import java.util.List;

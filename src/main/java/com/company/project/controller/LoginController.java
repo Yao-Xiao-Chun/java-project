@@ -2,10 +2,9 @@ package com.company.project.controller;
 
 import com.company.project.core.JwtToken;
 import com.company.project.core.Result;
-import com.company.project.core.ResultCode;
-import com.company.project.entity.LoginUser;
-import com.company.project.entity.User;
-import com.company.project.service.UserService;
+import com.company.project.model.entity.LoginUser;
+import com.company.project.model.entity.User;
+import com.company.project.service.intf.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Logger;
 
 @RestController
 @RequestMapping("/login")

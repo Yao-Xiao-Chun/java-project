@@ -1,6 +1,6 @@
 package com.company.project.mapper;
 
-import com.company.project.entity.User;
+import com.company.project.model.entity.User;
 
 import com.github.pagehelper.Page;
 

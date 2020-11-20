@@ -2,8 +2,7 @@ package com.company.project.core;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.company.project.configurer.WebMvcConfigurer;
-import com.company.project.entity.LoginUser;
+import com.company.project.model.entity.LoginUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

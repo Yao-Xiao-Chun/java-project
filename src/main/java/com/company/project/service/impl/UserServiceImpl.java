@@ -1,15 +1,14 @@
-package com.company.project.serviceImpl;
+package com.company.project.service.impl;
 
 import com.company.project.mapper.UserMapper;
-import com.company.project.entity.User;
-import com.company.project.service.UserService;
+import com.company.project.model.entity.User;
+import com.company.project.service.intf.UserService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
