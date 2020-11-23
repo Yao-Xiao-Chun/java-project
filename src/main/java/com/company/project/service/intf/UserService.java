@@ -1,5 +1,6 @@
 package com.company.project.service.intf;
 
+import com.company.project.model.dto.UserForm;
 import com.company.project.model.entity.User;
 import com.github.pagehelper.PageInfo;
 
@@ -35,4 +36,6 @@ public interface UserService {
    PageInfo<User> getPageAll(int pageNum, int pageSize);
 
    List<User> getByIDs(Integer id);
+
+   int insert(UserForm userForm);
 }

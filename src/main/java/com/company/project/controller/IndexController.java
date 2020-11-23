@@ -3,12 +3,14 @@ package com.company.project.controller;
 import com.company.project.core.Result;
 import com.company.project.core.ResultCode;
 import com.company.project.core.UserLoginToken;
+import com.company.project.model.dto.UserForm;
 import com.company.project.model.entity.FormUser;
 import com.company.project.model.entity.User;
 import com.company.project.service.intf.UserService;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -127,10 +129,23 @@ public class IndexController {
     }
 
     @RequestMapping(value = "/add_user",method = RequestMethod.POST)
-    public Result addUser()
+    public Result addUser(@RequestBody UserForm userForm)
     {
         Result result = new Result();
 
+        String passwordMD5 = DigestUtils.md5DigestAsHex(userForm.getPassword().getBytes());
+
+        userForm.setPassword(passwordMD5);
+
+        //新增数据
+        try{
+            userService.insert(userForm);
+        }catch (Exception exception){
+
+           return result.setMessage(exception.getMessage());
+        }
+
+        result.setData(userForm).setMessage("新增用户成功");
 
         return result;
     }

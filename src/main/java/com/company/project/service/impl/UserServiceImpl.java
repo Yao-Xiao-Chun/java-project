@@ -1,6 +1,7 @@
 package com.company.project.service.impl;
 
 import com.company.project.mapper.UserMapper;
+import com.company.project.model.dto.UserForm;
 import com.company.project.model.entity.User;
 import com.company.project.service.intf.UserService;
 import com.github.pagehelper.PageHelper;
@@ -61,4 +62,14 @@ public class UserServiceImpl implements UserService {
 
         return userMapper.getByIDs(id);
     }
+
+    @Override
+    public int insert(UserForm userForm) {
+
+        int result =  userMapper.insert(userForm);
+
+        return result;
+    }
+
+
 }

@@ -1,5 +1,6 @@
 package com.company.project.mapper;
 
+import com.company.project.model.dto.UserForm;
 import com.company.project.model.entity.User;
 
 import com.github.pagehelper.Page;
@@ -19,8 +20,9 @@ public interface UserMapper {
     @Select("select id,username,password,nick_name,sex from users")
     List<User> getAll();
 
-    @Insert("insert into users(name) values(#{name})")
-    int insert(@Param("name") String name);
+    @Insert("insert into users(username,password,nick_name,sex) values(#{username},#{password},#{nickName},#{sex})")
+    @Options(useGeneratedKeys = true, keyProperty = "id")//新增后获取主键id
+    int insert(UserForm name);
 
     @Select("select count(*) from users")
     int total();
