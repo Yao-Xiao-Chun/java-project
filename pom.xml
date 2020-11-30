@@ -137,28 +137,19 @@
         </dependency>
 
 
-        <!--es搜索引擎配置-->
+        <!--es控件,解决springboot和es版本不一致的问题-->
         <dependency>
-            <groupId>org.elasticsearch.client</groupId>
-            <artifactId>transport</artifactId>
-            <version>5.5.1</version>
+            <groupId>io.searchbox</groupId>
+            <artifactId>jest</artifactId>
+            <version>5.3.3</version>
         </dependency>
         <dependency>
             <groupId>org.elasticsearch</groupId>
             <artifactId>elasticsearch</artifactId>
             <version>5.5.1</version>
         </dependency>
-       <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-data-elasticsearch</artifactId>
-        </dependency>
 
-        <dependency>
-            <groupId>org.mybatis.generator</groupId>
-            <artifactId>mybatis-generator-core</artifactId>
-            <version>1.3.5</version>
-            <scope>compile</scope>
-        </dependency>
+
 
     </dependencies>
 
