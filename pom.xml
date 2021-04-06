@@ -83,7 +83,7 @@
             <artifactId>fastjson</artifactId>
             <version>1.2.47</version>
         </dependency>
-        <!--阿里 Druid Spring Boot Starter依赖-->
+        <!--阿里 Druid Spring Boot Starter依赖 数据库连接池-->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid-spring-boot-starter</artifactId>
@@ -149,7 +149,22 @@
             <version>5.5.1</version>
         </dependency>
 
+        <!--aop 面向切面-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
 
+        <!--slf4j-log4j12 日志管理-->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+        <!--日志处理包-->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+        </dependency>
 
     </dependencies>
 
@@ -169,6 +184,19 @@
                 </configuration>
             </plugin>
         </plugins>
+
+        <!-- 重新指明资源文件位置 -->
+        <resources>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.xml</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+        </resources>
     </build>
 
     <repositories>

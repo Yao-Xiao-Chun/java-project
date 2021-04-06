@@ -4,8 +4,10 @@ import com.company.project.core.Result;
 import com.company.project.core.ResultCode;
 import com.company.project.core.UserLoginToken;
 import com.company.project.model.dto.UserForm;
+import com.company.project.model.entity.Area;
 import com.company.project.model.entity.FormUser;
 import com.company.project.model.entity.User;
+import com.company.project.service.intf.AreaService;
 import com.company.project.service.intf.UserService;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +32,9 @@ public class IndexController {
 
     @Autowired
     JdbcTemplate jdbcTemplate;
+
+    @Autowired
+    private AreaService areaService;
 
     @RequestMapping(value = "/hello",method = RequestMethod.GET)
     public static Result index(){
@@ -147,6 +152,18 @@ public class IndexController {
 
         result.setData(userForm).setMessage("新增用户成功");
 
+        return result;
+    }
+
+    @RequestMapping(value = "/area",method = RequestMethod.GET)
+    public Result area()
+    {
+        Result result = new Result();
+
+        PageInfo<Area> list = areaService.getAreaList();
+
+        result.setData(list);
+        result.setMessage("你好区域");
         return result;
     }
 

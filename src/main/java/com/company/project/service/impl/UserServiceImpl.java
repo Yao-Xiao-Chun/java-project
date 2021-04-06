@@ -1,6 +1,6 @@
 package com.company.project.service.impl;
 
-import com.company.project.mapper.UserMapper;
+import com.company.project.mapper.one.UserMapper;
 import com.company.project.model.dto.UserForm;
 import com.company.project.model.entity.User;
 import com.company.project.service.intf.UserService;

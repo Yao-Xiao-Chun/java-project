@@ -14,5 +14,15 @@
       "name": "mybatis.configuration.map-underscore-to-camel-case",
       "type": "java.lang.String",
       "description": "Description for mybatis.configuration.map-underscore-to-camel-case."
+    },
+    {
+      "name": "spring.datasource.one.username",
+      "type": "java.lang.String",
+      "description": "Description for spring.datasource.one.username."
+    },
+    {
+      "name": "spring.datasource.one.type",
+      "type": "java.lang.String",
+      "description": "Description for spring.datasource.one.type."
     }
   ] }

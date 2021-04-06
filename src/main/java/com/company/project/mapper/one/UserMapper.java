@@ -1,4 +1,4 @@
-package com.company.project.mapper;
+package com.company.project.mapper.one;
 
 import com.company.project.model.dto.UserForm;
 import com.company.project.model.entity.User;

@@ -3,6 +3,7 @@ package com.company.project.controller;
 import com.company.project.core.Result;
 import com.company.project.model.entity.BookDocument;
 import com.company.project.service.intf.BookInfoService;
+import com.company.project.service.intf.LiteBookService;
 import org.apache.ibatis.annotations.Mapper;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,8 @@ public class BookController {
     @Autowired
     private BookInfoService bookInfoService;
 
+    @Autowired
+    private LiteBookService liteBookService;
 
 
     @RequestMapping(value = "/add",method= RequestMethod.POST)
@@ -36,6 +39,17 @@ public class BookController {
 
         result.setData(map).setMessage("创建成功");
 
+        return result;
+    }
+
+    @RequestMapping(value = "/name",method = RequestMethod.GET)
+    public Result getBookNames()
+    {
+        Result result = new Result();
+
+         String name = liteBookService.getLiteBookName();
+
+         result.setData(name);
         return result;
     }
 }
