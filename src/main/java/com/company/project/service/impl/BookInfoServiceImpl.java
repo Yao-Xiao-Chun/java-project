@@ -2,11 +2,14 @@ package com.company.project.service.impl;
 
 import com.company.project.config.JestClientConfig;
 import com.company.project.model.entity.BookDocument;
-import com.company.project.model.entity.User;
 import com.company.project.service.intf.BookInfoService;
 import io.searchbox.client.JestClient;
 import io.searchbox.core.DocumentResult;
 import io.searchbox.core.Index;
+import io.searchbox.core.Search;
+import io.searchbox.core.SearchResult;
+import org.elasticsearch.index.query.MultiMatchQueryBuilder;
+import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +22,9 @@ public class BookInfoServiceImpl  implements BookInfoService
 {
     @Autowired
     private JestClientConfig jestClientConfig;
+
+    @Autowired
+    private JestClient jestClient;
 
     @Override
     public Map<String, Object> createBookData(BookDocument bookDocument)
@@ -47,8 +53,13 @@ public class BookInfoServiceImpl  implements BookInfoService
     }
 
     @Override
-    public void getBookData(String name)
-    {
+    public String getBookData(String name) throws IOException {
 
+        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+
+        searchSourceBuilder.query(new MultiMatchQueryBuilder(name, "bookName","bookAuthor","desc"));
+
+
+      return "";
     }
 }

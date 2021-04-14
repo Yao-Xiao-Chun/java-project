@@ -2,16 +2,17 @@ package com.company.project.controller;
 
 import com.company.project.core.Result;
 import com.company.project.model.entity.BookDocument;
+import com.company.project.model.entity.two.LiteBooks;
 import com.company.project.service.intf.BookInfoService;
 import com.company.project.service.intf.LiteBookService;
 import org.apache.ibatis.annotations.Mapper;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.swing.plaf.PanelUI;
+import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
@@ -47,9 +48,24 @@ public class BookController {
     {
         Result result = new Result();
 
-         String name = liteBookService.getLiteBookName();
+        List<Object> name = liteBookService.setLiteBookData();
 
-         result.setData(name);
+        result.setData(name);
+
         return result;
     }
+
+
+    @GetMapping(value = "/list")
+    public Result getBookList() throws IOException {
+
+        Result result = new Result();
+
+        String list = bookInfoService.getBookData("");
+
+        result.setData(list).setMessage("获取输入列表");
+
+        return  result;
+    }
+
 }
